@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1">
+    <title>Memento</title>
+    <link rel="stylesheet" href="css/font-awesome.css?2.0.1" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="css/styles.css?1.0.1" type="text/css" media="screen" charset="utf-8">
+	<link href='http://fonts.googleapis.com/css?family=Quando' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+
+	<div class="overlay overlay-top overlay-white panel panel-top top-menu">
+ 	 	<h1><span class="progress-container progress-container-title" style="display: none;"><span class="progress-bar"></span></span>Memento</h1>
+ 	 	<ul class="menu">
+ 	 		<li><a href="#map" class="toggle-fullscreen-layer selected">Location</a></li>
+ 	 		<li><a href="#connections" class="toggle-fullscreen-layer">Connections</a></li>
+ 	 		<li><a href="#stats" class="toggle-fullscreen-layer">Stats</a></li>
+ 	 	</ul>
+ 	 	<ul id="calendar-navigation" class="menu pull-center calendar-navigation">
+ 	 		
+ 	 	</ul>
+ 	 	<ul class="menu pull-right">
+ 	 		<li><a href="/logout">Log out</a></li>
+ 	 	</ul>
+  	</div>
+  	<div class="progress-container fullscreen dark overlay view-controlled-loader"></div>
+    <div id="map" class="fullscreen view-controlled">
+    	<div class="overlay overlay-white panel round top right panel-mapstyle">
+    		<a href="#" class="map-style-toggle btn-panel"><i>Satellite</i><i style="display: none">Road map</i></a>
+    	</div>
+    	<div class="overlay overlay-white panel round top left panel-zoom">
+    		<a href="#" class="btn-panel zoom-control zoom-in" title="Zoom in"><i class="icon-zoom-in"></i></a>
+    		<a href="#" class="btn-panel zoom-control zoom-out" title="Zoom out"><i class="icon-zoom-out"></i></a>
+    	</div>	
+    </div>
+    <div id="connections" class="fullscreen view-controlled"></div>
+    <div id="stats" class="fullscreen view-controlled">
+    	<div class="stats-content">
+    		<h1 class="overlay-white">Stats</h1>
+    		<h2>Today</h2>
+    		<dl>
+    			<dt>Movement</dt><dd id="stats-today-movement">? km</dd>
+    			<dt>Connections</dt><dd id="stats-today-connections">?</dd>
+    		</dl>
+    		<h2>This week</h2>
+    		<dl>
+    			<dt>Movement</dt><dd id="stats-week-movement">? km</dd>
+    			<dt>Connections</dt><dd id="stats-week-connections">?</dd>
+    		</dl>
+    		<h2>All time</h2>
+    		<dl>
+    			<dt>Movement</dt><dd id="stats-alltime-movement">? km</dd>
+    			<dt>Connections</dt><dd id="stats-alltime-connections">?</dd>
+    		</dl>
+    	</div>
+    </div>
+	<div id="timeline-panel" class="overlay panel round bottom center panel-timeline overlay-white view-controlled">
+			<div class="controls controls-left">
+				<a href="#" class="btn-panel btn-playpause" title="Play"><i class="icon-play"></i><i class="icon-pause" style="display: none;"></i></a>
+				<a href="#" class="btn-panel btn-repeat btn-toggle" title="Loop"><i class="front icon-repeat "></i><i class="back icon-chevron-right"></i></a>
+				<a href="#speed-menu" class="btn-panel dropup-toggle" title="Playback speed"><i class="icon-time"></i></a>
+				<span class="dropup">
+				<div id="speed-menu" class="dropup-menu speed-menu">
+					<img src="images/hare.png" alt="Slow" width="20" height="20" />
+					<input type="range" id="playback-speed" min="0" max="100" value="50" style="width: 20px; height: 100px; -webkit-appearance: slider-vertical;" />
+					<img src="images/turtle.png" alt="Slow" width="24" height="12" />
+				</div>
+				</span>
+			</div>
+			<span class="timeline-container" id="day-timeline"></span>
+	</div>
+	
+	<div id="point-info-view" class="splash center panel round overlay-white info-view"></div>
+	
+	<div id="welcomeScreen" class="fullscreen overlay dark" style="display: none;">
+		<div class="splash center panel round overlay-white">
+			<h1>Welcome!</h1>
+			<div>
+				<p><strong>Please log in using campusnet below.</strong></p>
+				<p><a href="https://curie.imm.dtu.dk/sensible_outbound/auth/?app_id_secret=qDf23A1,ok23nj42SDFF3f2f34FF2f" class="btn-panel dtu-logo-button"><img src="images/DTU-logo.svg" alt="" /><br/>Campusnet login</a></p>
+			</div>
+		</div>
+	</div>
+	<div class="overlay watermark bottom right">Created by Bo Stendal Sørensen</div>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="d3.v2.js"></script>
+	<script type="text/javascript" src="d3-extras.js"></script>
+	<script type="text/javascript" src="polymaps.js"></script>
+	<script type="text/javascript" src="crossfilter.v1.js"></script>
+	<script type="text/javascript" src="calendar-timeline.js"></script>
+	<script type="text/javascript" src="connections-view.js"></script>
+	<script type="text/javascript" src="data-store.js"></script>
+	<script type="text/javascript" src="date-switcher.js"></script>
+	<script type="text/javascript" src="dbscan.js"></script>
+	<script type="text/javascript" src="info-view.js"></script>
+	<script type="text/javascript" src="k-means.js"></script>
+	<script type="text/javascript" src="stats-view.js"></script>
+	<script type="text/javascript" src="tiler.js"></script>
+	<script type="text/javascript" src="timeline-player.js"></script>
+	<script type="text/javascript" src="map-view.js"></script>
+	<script type="text/javascript" src="visualisation-controller.js"></script>
+  </body>
+</html>
