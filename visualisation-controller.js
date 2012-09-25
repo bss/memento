@@ -23,7 +23,7 @@
     viewResolution = d3.time.day,
     params = urlParams(),
     APIBaseUrl = "/sensible_outbound/v1/",
-    authToken = "e5a3af62-c795-4577-8681-0982b86d2ac2";
+    authToken;
 
   function switchView(newView) {
     progress.showHide(newView);
