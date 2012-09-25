@@ -55,6 +55,7 @@
     });
 
     if (typeof(params.status) !== "undefined" && params.status === "success" && typeof(params.token) !== "undefined") {
+      history.pushState(null, null, window.location.href.replace(window.location.search, ""));
       authToken = params.token;
     }
     
