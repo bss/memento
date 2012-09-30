@@ -195,8 +195,13 @@
 
   });
 
-  function callAPI(path, cb) {
+  function callAPI(path, cb, queryMap) {
     var url = APIBaseUrl+path+"?token="+authToken;
+    if (typeof(queryMap) !== "undefined") {
+      d3.map(queryMap).forEach(function (key, value) {
+        url += "&"+key+"="+value;
+      });
+    }
     d3.json(url, cb);
   }
 
@@ -247,7 +252,7 @@
       bluetoothNodes[mac] = {name: "?", uid: friendId, bluetooth_mac: mac, group: "student"};
 
       progress.incrementAll('connections', 'stats');
-      callAPI("bluetooth_"+friendId, handleBluetoothData(mac));
+      callAPI("bluetooth", handleBluetoothData(mac), {friend_id: friendId});
     });
     progress.decrementAll('connections', 'stats');
   }
