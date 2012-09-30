@@ -234,7 +234,7 @@
     d3.json("/sensible_inbound/users/me?token="+authToken, handleUserdata);
 
     progress.incrementAll('connections', 'stats');
-    callAPI("friends", handleBluetoothFriendsData);
+    callAPI("friends", handleBluetoothFriendsData, {po_class: "BluetoothScans"});
   }
 
   function handleUserdata(data) {
