@@ -55,7 +55,7 @@
     });
 
     if (typeof(params.status) !== "undefined" && params.status === "success" && typeof(params.token) !== "undefined") {
-      history.pushState(null, null, window.location.href.replace(window.location.search, ""));
+      //history.pushState(null, null, window.location.href.replace(window.location.search, ""));
       authToken = params.token;
     }
     
@@ -201,8 +201,7 @@
   }
 
   function loadLocationData() {
-    progress.increment('map');
-    progress.increment('stats');
+    progress.incrementAll('map', 'stats');
     callAPI("location", handleLocationData);
   }
 
@@ -222,26 +221,68 @@
       err += "<p><strong>Thanks!</strong></p>";
       $('#welcomeScreen .splash').html(err);
     }
-    progress.decrement('map');
-    progress.decrement('stats');
+    progress.decrementAll('map', 'stats');
   }
 
   function loadBluetoothData() {
-    progress.increment('connections');
-    progress.increment('stats'); 
-    callAPI("bluetooth", handleBluetoothData);
+    progress.incrementAll('connections', 'stats');
+    d3.json("/sensible_inbound/users/me?token="+authToken, handleUserdata);
+
+    progress.incrementAll('connections', 'stats');
+    callAPI("friends", handleBluetoothFriendsData);
   }
 
-  function handleBluetoothData(data) {
+  function handleUserdata(data) {
+    var id = data._id;
+    bluetoothNodes[data.bluetooth_mac] = {name: data.name, uid: id, bluetooth_mac: data.bluetooth_mac, group: "student"};
+
+    progress.incrementAll('connections', 'stats');
+    callAPI("bluetooth", handleBluetoothData(data.bluetooth_mac));
+
+    progress.decrementAll('connections', 'stats');
+  }
+
+  function handleBluetoothFriendsData(data) {
+    d3.map(data).forEach(function (friendId, mac) {
+      bluetoothNodes[mac] = {name: "?", uid: friendId, bluetooth_mac: mac, group: "student"};
+
+      progress.incrementAll('connections', 'stats');
+      callAPI("bluetooth_"+friendId, handleBluetoothData(mac));
+    });
+    progress.decrementAll('connections', 'stats');
+  }
+
+  function handleBluetoothData(from_mac) {
+    // "links":[{"name":"Galaxy Nexus","mac_address":"F0:E7:7E:DD:61:38","timestamp":1339662713,"from":"351565051060678","to":"351565053474810"}
+    /*
     if (data && typeof(data.nodes) != "undefined" &&
       typeof(data.links) != "undefined") {
       bluetoothNodes = data.nodes;
       bluetoothStore.data(data.links);
       refreshTimelineData();
       renderAll();
+    }*/
+    return function (data) {
+      var links = [];
+      data = data || [];
+      data.forEach(function (probe) {
+        probe.devices.forEach(function (device) {
+          if (device.mac_address.indexOf(":") !== -1) {
+            links.push({
+              name: device.name,
+              mac_address: device.mac_address,
+              timestamp: probe.timestamp,
+              from: from_mac,
+              to: device.mac_address
+            });
+          }
+        });
+      });
+      bluetoothStore.appendData(links);
+      refreshTimelineData();
+      renderAll();
+      progress.decrementAll('connections', 'stats');
     }
-    progress.decrement('connections');
-    progress.decrement('stats');
   }
 
   function changeDate(day) {
@@ -531,11 +572,21 @@
       count[view]++;
       _.showHide(currentView);
     };
+    _.incrementAll = function () {
+      d3.values(arguments).forEach(function (view) {
+        _.increment(view);
+      });
+    };
     _.decrement = function (view) {
       if (!arguments.length) view = 'general';
       if (typeof(count[view]) == "undefined") count[view] = 0;
       count[view]--;
       _.showHide(currentView);
+    };
+    _.decrementAll = function () {
+      d3.values(arguments).forEach(function (view) {
+        _.decrement(view);
+      });
     };
     _.showHide = function (view) {
       if (!arguments.length) view = 'general';

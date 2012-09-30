@@ -18,7 +18,8 @@
       filteredData: filteredData,
       resultObserver: resultObserver,
       preprocessor: preprocessor,
-      forceUpdate: forceUpdate
+      forceUpdate: forceUpdate,
+      appendData: appendData
     };
 
     function preprocessor(_) {
@@ -34,6 +35,10 @@
       cf.add(cfData);
       dispatcher.dataChanged();
       return self;
+    }
+
+    function appendData(_) {
+      return self.data(cfData.concat(_));
     }
 
     function addDimension(name, handler) {

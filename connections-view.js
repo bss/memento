@@ -115,7 +115,7 @@ function ConnectionsView() {
             .style("opacity", opacity);
       };
     }
-
+/*
     var legend = container.select("svg").selectAll("g.legend")
       .data(groupColor.domain(), String)
     .enter().append("g")
@@ -130,6 +130,7 @@ function ConnectionsView() {
       .attr("x", 13)
       .attr("y", 4)
       .text(String);
+      */
 
     innerSvg.select('text.error').remove();
     if (innerSvg.selectAll('*').empty()) {
@@ -170,8 +171,7 @@ function ConnectionsView() {
       });
     }
 
-    nodesMap = data.nodes.map(function (d) { return d.uid; });
-
+    nodesMap = data.nodes.map(function (d) { return d.bluetooth_mac; });
     data.links.forEach(function (d) {
       d.source = nodesMap.indexOf(d.from);
       d.target = nodesMap.indexOf(d.to);
