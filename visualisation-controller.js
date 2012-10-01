@@ -257,7 +257,7 @@
       };
 
       progress.incrementAll('connections', 'stats');
-      callAPI("bluetooth", handleBluetoothData(mac), {friend_id: friendId});
+      callAPI("bluetooth", handleBluetoothData(friend.bluetooth_mac), {friend_id: friend.id});
     });
     progress.decrementAll('connections', 'stats');
   }
