@@ -248,8 +248,13 @@
   }
 
   function handleBluetoothFriendsData(data) {
-    d3.map(data).forEach(function (friendId, mac) {
-      bluetoothNodes[mac] = {name: "?", uid: friendId, bluetooth_mac: mac, group: "student"};
+    data.forEach(function (friend) {
+      bluetoothNodes[mac] = {
+        name: friend.name || "?", 
+        uid: friend.id, 
+        bluetooth_mac: friend.bluetooth_mac, 
+        group: "student"
+      };
 
       progress.incrementAll('connections', 'stats');
       callAPI("bluetooth", handleBluetoothData(mac), {friend_id: friendId});
