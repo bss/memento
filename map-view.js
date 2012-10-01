@@ -62,7 +62,7 @@ function initAerialMap(data) {
  
 var script = document.createElement("script");
 script.setAttribute("type", "text/javascript");
-script.setAttribute("src", "http://dev.virtualearth.net" + 
+script.setAttribute("src", "//dev.virtualearth.net" + 
   "/REST/V1/Imagery/Metadata/AerialWithLabels" + 
   "?key=AjZ-czlh9M4J7LLO_ZTm7w3YU7sYtG-roJn7gK8GfY2Gx3v8A1Gyy4Xkg8GIPwE3" + 
   "&jsonp=initAerialMap");
