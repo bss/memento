@@ -249,7 +249,7 @@
 
   function handleBluetoothFriendsData(data) {
     data.forEach(function (friend) {
-      bluetoothNodes[mac] = {
+      bluetoothNodes[friend.bluetooth_mac] = {
         name: friend.name || "?", 
         uid: friend.id, 
         bluetooth_mac: friend.bluetooth_mac, 
