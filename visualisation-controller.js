@@ -258,15 +258,6 @@
   }
 
   function handleBluetoothData(from_mac) {
-    // "links":[{"name":"Galaxy Nexus","mac_address":"F0:E7:7E:DD:61:38","timestamp":1339662713,"from":"351565051060678","to":"351565053474810"}
-    /*
-    if (data && typeof(data.nodes) != "undefined" &&
-      typeof(data.links) != "undefined") {
-      bluetoothNodes = data.nodes;
-      bluetoothStore.data(data.links);
-      refreshTimelineData();
-      renderAll();
-    }*/
     return function (data) {
       var links = [];
       data = data || [];
