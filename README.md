@@ -38,5 +38,5 @@ Many improvements could be made on the overall design. First of all it would be 
 
 License
 ===
-FreeBSD License, see [LICENSE.md].
+FreeBSD License, see LICENSE.md for more info.
 
